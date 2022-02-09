@@ -1,0 +1,25 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- task: AzureResourceManagerTemplateDeployment@3
+  inputs:
+    deploymentScope: 'Resource Group'
+    azureResourceManagerConnection: 'NNITLabsMC'
+    subscriptionId: '67e3289f-ecc9-44ab-840b-20eb34d81fd6'
+    action: 'Create Or Update Resource Group'
+    resourceGroupName: 'TMTY-RG-Test'
+    location: 'East US'
+    templateLocation: 'URL of the file'
+    csmFileLink: 'https://raw.githubusercontent.com/timzacarias/TMTYarmrepotest/main/CreateWebApp/azuredeploy.json'
+    overrideParameters: '-projectName TMTYarmrepo-test'
+    deploymentMode: 'Incremental'
+    deploymentName: 'DeployPipelineTemplate'
